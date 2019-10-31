@@ -33,28 +33,17 @@ describe('Interactions', () => {
 
   it('Should save a person when click Register Button', () => {
 
-    // Mock Service return
+    // Mock Service response
     const firebaseService = require('../../services/FirebaseService')
     jest
       .spyOn(firebaseService, "savePerson")
       .mockImplementation(() => Promise.resolve("Done"))
 
     // Change field values
-    wrapper.find('#person-document').simulate('change', {
-      target: { value: '123' }
-    })
-
-    wrapper.find('#person-name').simulate('change', {
-      target: { value: 'abc' }
-    })
-
-    wrapper.find('#person-city').simulate('change', {
-      target: { value: 'cde' }
-    })
-
-    wrapper.find('#person-age').simulate('change', {
-      target: { value: '20' }
-    })
+    fillField(wrapper, '#person-document', '123')
+    fillField(wrapper, '#person-name', 'abc')
+    fillField(wrapper, '#person-city', 'cde')
+    fillField(wrapper, '#person-age', '20')
 
     // Click Save Button
     wrapper.find('#save-button').simulate('click')
@@ -66,3 +55,9 @@ describe('Interactions', () => {
   it('Should clear a form when click Cancel Button', () => {
   })
 })
+
+function fillField(wrapper, field, value) {
+  wrapper.find(field).simulate('change', {
+    target: { value: value }
+  })
+}
